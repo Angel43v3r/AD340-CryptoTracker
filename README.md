@@ -75,43 +75,151 @@ Build configuration language: Kotlin DSL (build.gradle.kts).
 
 
 ## Getting Started
-### STEP 1: Go to `File` -> `New` -> `New Project` -> Select `Empty Activity`
+### STEP 1: Go to `File` -> `New` -> `New Project` -> Select `Empty View Activity`
 
-### STEP 2: Go to `Project` -> `AD340-CryptoTracker` folder -> `app` -> `build.gradle.kts`
+### STEP 2: Go to `Project` -> `AD340-CryptoTracker` folder -> `app` -> `src` -> `main` -> `AndroidManifest.xml`
 
-### STEP 3: In `app/build.gradle.kts` under **dependencies** add
-```kotlin
-
+### STEP 3: In `AndroidManifext.xml` add the permission line
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 
-Also add this under **plugins**
+### STEP 4: In `build.gradle.kts` app/ level replace the dependencies { } block with the following:
 ```kotlin
+plugins {
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.kotlin.serialization)
+}
 
+android {
+  namespace = "com.example.cryptotracker"
+  compileSdk = 36
+
+  defaultConfig {
+    applicationId = "com.example.cryptotracker"
+    minSdk = 24
+    targetSdk = 36
+    versionCode = 1
+    versionName = "1.0"
+
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      isMinifyEnabled = false
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+      )
+    }
+  }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
+  kotlinOptions {
+    jvmTarget = "11"
+  }
+}
+
+dependencies {
+  implementation(libs.androidx.activity.ktx)
+  implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.constraintlayout)
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.material)
+
+  // Ktor - HTTP Client
+  implementation("io.ktor:ktor-client-android:2.3.7")
+  implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
+  implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
+
+  // Kotlin Serialization (JSON parsing)
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+
+  // Coroutines (async network calls)
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+  testImplementation(libs.junit)
+  androidTestImplementation(libs.androidx.espresso.core)
+  androidTestImplementation(libs.androidx.junit)
+}
 ```
+What did we update:
+- dependencies
+- plugins
+- compileSdk
 
-### STEP 4: In `build.gradle.kts` root level add
-```kotlin
+We also added:
+- kotlin options
 
-```
+* Make sure to match the kotlin version in your `libs.versions.toml` file*
 
-*NOTE: Check your kotlin version under gradle/libs.version.toml*
-
-### STEP 5: In `libs.versions.toml` gradle folder add
+### STEP 5: In `libs.versions.toml` gradle folder replace with this block
 ```toml
+[versions]
+agp = "8.5.2"
+coreKtx = "1.15.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.12.0"
+activityKtx = "1.9.0"
+constraintlayout = "2.2.1"
+kotlin = "2.1.20"
 
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ```
 
-### STEP 6: In `gradle.properties` add
+### STEP 6: In `build.gradle.kts` root level, add
 ```kotlin
-
+plugins {
+  alias(libs.plugins.android.application) apply false
+  alias(libs.plugins.kotlin.android) apply false
+  alias(libs.plugins.kotlin.serialization) apply false
+}
 ```
-### STEP 7: Go to `File` -> `Sync Project with Gradle Files`
+### STEP 7: Go to `File` -> `Invalidate Caches`
+Check `Clear file system cache and Local History`
+Click `Invalidate and Restart`
 
-### STEP 8: In `app/src/main/java/com.example.ad340_neverforget` folder,
+### STEP 8: Go to `File` -> `Sync Project with Gradle Files`
+
+### STEP 9: Go to gradle.properties and add
+```kotlin
+android.useAndroidX=true
+```
+Then click `Sync Now`
+
+### STEP 10: In `app/src/main/java/com.example.cryptotracker` folder,
 Create the files needed for the assignment. Follow Assignment Instruction.
-- MainActivity.kt
-- ?
+- CryptoCoin.kt (Data Model)
+- KtorClient (HTTP client)
+- CryptoAdapter (RecyclerView Adapter)
 
+### STEP 11: Create the Item Layout.
+Navigate to `app/src/main/res/layout`
+Create file `item_crypto_coin.xml`
+
+### STEP 12: Update `activity_main.xml`
+
+### STEP 13: Update `MainActivity.kt` then Run the app
 
 ## Assignment Instruction
 
