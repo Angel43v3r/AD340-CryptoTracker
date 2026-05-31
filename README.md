@@ -223,7 +223,7 @@ Create file `item_crypto_coin.xml`
 
 ## Assignment Instruction
 
-![Crypto App Image 1]()
+![Crypto App Image](https://github.com/Angel43v3r/AD340-CryptoTracker/blob/master/assets/CryptoTracker.png)
 
 ### Task 1: Project Setup & Dependencies
 Add the required Internet permissions to your `AndroidManifest.xml`
