@@ -283,4 +283,4 @@ Date: **May 25, 2026** to **May 31, 2026**
 
 ## License
 
-This project is licensed under the MIT License. Please refer to the [LICENSE](https://github.com/Angel43v3r/AD340-neverForget/blob/master/LICENSE) for more details.
+This project is licensed under the MIT License. Please refer to the [LICENSE](https://github.com/Angel43v3r/AD340-CryptoTracker/blob/master/LICENSE) for more details.
